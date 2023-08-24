@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package dto;
 
 import java.io.Serializable;
@@ -11,13 +15,17 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+/**
+ *
+ * @author rodrious
+ */
 @Entity
 @Table(name = "tecnologia")
 @NamedQueries({
     @NamedQuery(name = "Tecnologia.findAll", query = "SELECT t FROM Tecnologia t"),
     @NamedQuery(name = "Tecnologia.findByIdproducto", query = "SELECT t FROM Tecnologia t WHERE t.idproducto = :idproducto"),
     @NamedQuery(name = "Tecnologia.findByNombreproducto", query = "SELECT t FROM Tecnologia t WHERE t.nombreproducto = :nombreproducto"),
-    @NamedQuery(name = "Tecnologia.findByProveedorproducto", query = "SELECT t FROM Tecnologia t WHERE t.proveedorproducto = :proveedorproducto"),
+    @NamedQuery(name = "Tecnologia.findByIdProveedor", query = "SELECT t FROM Tecnologia t WHERE t.idProveedor = :idProveedor"),
     @NamedQuery(name = "Tecnologia.findByCantidad", query = "SELECT t FROM Tecnologia t WHERE t.cantidad = :cantidad"),
     @NamedQuery(name = "Tecnologia.findByPrecio", query = "SELECT t FROM Tecnologia t WHERE t.precio = :precio"),
     @NamedQuery(name = "Tecnologia.findByMarca", query = "SELECT t FROM Tecnologia t WHERE t.marca = :marca"),
@@ -32,10 +40,10 @@ public class Tecnologia implements Serializable {
     private Integer idproducto;
     @Basic(optional = false)
     @Column(name = "nombreproducto")
-    private int nombreproducto;
+    private String nombreproducto;
     @Basic(optional = false)
-    @Column(name = "proveedorproducto")
-    private int proveedorproducto;
+    @Column(name = "idProveedor")
+    private int idProveedor;
     @Basic(optional = false)
     @Column(name = "cantidad")
     private int cantidad;
@@ -56,10 +64,19 @@ public class Tecnologia implements Serializable {
         this.idproducto = idproducto;
     }
 
-    public Tecnologia(Integer idproducto, int nombreproducto, int proveedorproducto, int cantidad, double precio, String marca, String categoria) {
+    public Tecnologia(Integer idproducto, String nombreproducto, int idProveedor, int cantidad, double precio, String marca, String categoria) {
         this.idproducto = idproducto;
         this.nombreproducto = nombreproducto;
-        this.proveedorproducto = proveedorproducto;
+        this.idProveedor = idProveedor;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.marca = marca;
+        this.categoria = categoria;
+    }
+
+    public Tecnologia(String nombreproducto, int idProveedor, int cantidad, double precio, String marca, String categoria) {
+        this.nombreproducto = nombreproducto;
+        this.idProveedor = idProveedor;
         this.cantidad = cantidad;
         this.precio = precio;
         this.marca = marca;
@@ -74,20 +91,20 @@ public class Tecnologia implements Serializable {
         this.idproducto = idproducto;
     }
 
-    public int getNombreproducto() {
+    public String getNombreproducto() {
         return nombreproducto;
     }
 
-    public void setNombreproducto(int nombreproducto) {
+    public void setNombreproducto(String nombreproducto) {
         this.nombreproducto = nombreproducto;
     }
 
-    public int getProveedorproducto() {
-        return proveedorproducto;
+    public int getIdProveedor() {
+        return idProveedor;
     }
 
-    public void setProveedorproducto(int proveedorproducto) {
-        this.proveedorproducto = proveedorproducto;
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
     }
 
     public int getCantidad() {

@@ -58,10 +58,12 @@ public class FraSistema extends javax.swing.JFrame {
             .addGap(0, 428, Short.MAX_VALUE)
         );
 
+        mnbMenus.setBackground(new java.awt.Color(255, 255, 0));
+        mnbMenus.setForeground(new java.awt.Color(0, 0, 0));
         mnbMenus.setPreferredSize(new java.awt.Dimension(70, 35));
 
         jmnInicio.setText("Inicio");
-        jmnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jmnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jmnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnInicioMouseClicked(evt);
@@ -70,7 +72,7 @@ public class FraSistema extends javax.swing.JFrame {
         mnbMenus.add(jmnInicio);
 
         jmnVentas.setText("Ventas");
-        jmnVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jmnVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jmnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnVentasMouseClicked(evt);
@@ -79,15 +81,25 @@ public class FraSistema extends javax.swing.JFrame {
         mnbMenus.add(jmnVentas);
 
         jmnProductos.setText("Productos");
-        jmnProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jmnProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jmnProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmnProductosMouseClicked(evt);
+            }
+        });
         mnbMenus.add(jmnProductos);
 
         jmnClientes.setText("Clientes");
-        jmnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jmnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jmnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmnClientesMouseClicked(evt);
+            }
+        });
         mnbMenus.add(jmnClientes);
 
         jmnReportes.setText("Reportes");
-        jmnReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jmnReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jmnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnReportesMouseClicked(evt);
@@ -96,7 +108,7 @@ public class FraSistema extends javax.swing.JFrame {
         mnbMenus.add(jmnReportes);
 
         jmnPerfil.setText("Perfil");
-        jmnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jmnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jmnPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnPerfilMouseClicked(evt);
@@ -105,7 +117,7 @@ public class FraSistema extends javax.swing.JFrame {
         mnbMenus.add(jmnPerfil);
 
         mnuSalir.setText("Salir");
-        mnuSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mnuSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         mnuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mnuSalirMouseClicked(evt);
@@ -154,6 +166,16 @@ public class FraSistema extends javax.swing.JFrame {
         FraInicio inicio =  new FraInicio();
         inicio.setVisible(true);
     }//GEN-LAST:event_mnuSalirMouseClicked
+
+    private void jmnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnClientesMouseClicked
+        JpnClientes clientes = new JpnClientes();
+        mostrarPaneles(clientes);
+    }//GEN-LAST:event_jmnClientesMouseClicked
+
+    private void jmnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnProductosMouseClicked
+        JpnProductos productos = new JpnProductos(true);
+        mostrarPaneles(productos);
+    }//GEN-LAST:event_jmnProductosMouseClicked
 
     public static void main(String args[]) {
         try {
