@@ -130,4 +130,22 @@ public class AdministradorJpaController implements Serializable {
         }
     }
     
+    public Administrador iniciarSecionAdmin(String usuario, String pass){
+        EntityManager em  = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Administrador.validar");
+            q.setParameter("usuario", usuario);
+            q.setParameter("pass", pass);
+            Administrador admin = (Administrador) q.getSingleResult();
+            if (admin!=null) {
+                return admin;
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
 }

@@ -1,11 +1,14 @@
 package Vista;
 
+import dto.Administrador;
 import dto.Empleados;
 import javax.swing.JPanel;
 
 public class FraSistema extends javax.swing.JFrame {
     
     Empleados emple;
+    Administrador admin;
+    private boolean condicion;
     
     public FraSistema() {
         initComponents();
@@ -14,12 +17,17 @@ public class FraSistema extends javax.swing.JFrame {
         mostrarPaneles(inicio);
     }
     
-    public FraSistema(Object obj){
+    public FraSistema(Object obj, boolean condicion){
         initComponents();
         this.setLocationRelativeTo(null);
         JpnInicio inicio = new JpnInicio();
         mostrarPaneles(inicio);
-        emple = (Empleados) obj;
+        this.condicion = condicion;
+        if (condicion) {
+            admin = (Administrador) obj;
+        }else{
+            emple = (Empleados) obj;
+        }
     }
     
     private void mostrarPaneles(JPanel jpanel){
@@ -152,12 +160,24 @@ public class FraSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_jmnInicioMouseClicked
 
     private void jmnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnPerfilMouseClicked
-        JpnPerfil perfil = new JpnPerfil(emple.getId());
+        int id;
+        if (condicion) {
+            id = admin.getId();
+        }else{
+            id = emple.getId();
+        }
+        JpnPerfil perfil = new JpnPerfil(id);
         mostrarPaneles(perfil);
     }//GEN-LAST:event_jmnPerfilMouseClicked
 
     private void jmnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnReportesMouseClicked
-        JpnReporte reporte = new JpnReporte(emple.getId());
+        int id;
+        if (condicion) {
+            id = admin.getId();
+        }else{
+            id = emple.getId();
+        }
+        JpnReporte reporte = new JpnReporte(id);
         mostrarPaneles(reporte);
     }//GEN-LAST:event_jmnReportesMouseClicked
 
@@ -173,7 +193,13 @@ public class FraSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_jmnClientesMouseClicked
 
     private void jmnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnProductosMouseClicked
-        JpnProductos productos = new JpnProductos(true);
+        int admin;
+        if (condicion) {
+            admin=1;
+        }else{
+            admin=0;
+        }
+        JpnProductos productos = new JpnProductos(true,admin);
         mostrarPaneles(productos);
     }//GEN-LAST:event_jmnProductosMouseClicked
 

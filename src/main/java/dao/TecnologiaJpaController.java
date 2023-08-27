@@ -138,4 +138,19 @@ public class TecnologiaJpaController implements Serializable {
         }
     }
     
+    public List<Tecnologia> buscarClientes(String nombre){
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Tecnologia.buscarPorNombre");
+            String nombrepro = "%"+nombre+"%";
+            q.setParameter("nombreproducto", nombrepro);
+            List<Tecnologia> lista = q.getResultList();
+            return lista;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
 }

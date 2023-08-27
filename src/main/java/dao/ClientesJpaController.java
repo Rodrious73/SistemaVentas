@@ -130,4 +130,19 @@ public class ClientesJpaController implements Serializable {
         }
     }
     
+    public List<Clientes> buscarClientes(String dni){
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Clientes.busquedaDNI");
+            String ndni = dni+"%";
+            q.setParameter("dni", ndni);
+            List<Clientes> lista = q.getResultList();
+            return lista;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
 }

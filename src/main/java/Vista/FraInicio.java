@@ -1,23 +1,31 @@
 package Vista;
 
+import dao.AdministradorJpaController;
 import dao.EmpleadosJpaController;
 import dto.Empleados;
+import dto.Administrador;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.net.URI;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.Icon;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
 public class FraInicio extends javax.swing.JFrame {
 
     EmpleadosJpaController empleDAO = new EmpleadosJpaController();
+    AdministradorJpaController adminDAO = new AdministradorJpaController();
 
     public FraInicio() {
         initComponents();
         this.setLocationRelativeTo(null);
         logoInicial();
         txtGmail.requestFocus();
+        cargarSugerenciasCorreos();
     }
 
     private void logoInicial() {
@@ -32,10 +40,29 @@ public class FraInicio extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    private void abrirSistema(Object obj){
-        FraSistema fraSistema = new FraSistema(obj);
+
+    /*
+        True para administradores
+        False para empleados
+     */
+    private void abrirSistema(Object obj, boolean condicion) {
+        FraSistema fraSistema = new FraSistema(obj, condicion);
         fraSistema.setVisible(true);
+    }
+
+    private void cargarSugerenciasCorreos() {
+        List<Empleados> lista = empleDAO.findEmpleadosEntities();
+        List<Administrador> listaAdmin = adminDAO.findAdministradorEntities();
+        String[] correos = new String[lista.size() + listaAdmin.size()];
+        for (int i = 0; i < lista.size(); i++) {
+            correos[i] = lista.get(i).getCorreoEmple();
+        }
+
+        for (int i = 0; i < listaAdmin.size(); i++) {
+            correos[lista.size() + i] = listaAdmin.get(i).getUsuario();
+        }
+        JList listaCorreos = new JList(correos);
+        AutoCompleteDecorator.decorate(listaCorreos, txtGmail, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
     }
 
     @SuppressWarnings("unchecked")
@@ -56,6 +83,7 @@ public class FraInicio extends javax.swing.JFrame {
         pwdContrasenia = new javax.swing.JPasswordField();
         lblCambiarPass = new javax.swing.JLabel();
         btnIniciarSesion = new javax.swing.JButton();
+        btnIniciarAdmin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Ventas - Inicio de Sesión");
@@ -174,6 +202,19 @@ public class FraInicio extends javax.swing.JFrame {
             }
         });
 
+        btnIniciarAdmin.setBackground(new java.awt.Color(212, 197, 197));
+        btnIniciarAdmin.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        btnIniciarAdmin.setForeground(new java.awt.Color(0, 0, 0));
+        btnIniciarAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iniciar-sesion.png"))); // NOI18N
+        btnIniciarAdmin.setText("Administrador");
+        btnIniciarAdmin.setToolTipText("Iniciar sesión como Administrador");
+        btnIniciarAdmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIniciarAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarAdminActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -181,6 +222,7 @@ public class FraInicio extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(68, 68, 68)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnIniciarAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addComponent(lblTituloLogin))
@@ -200,7 +242,7 @@ public class FraInicio extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(54, 54, 54)
                 .addComponent(lblTituloLogin)
                 .addGap(34, 34, 34)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,8 +254,10 @@ public class FraInicio extends javax.swing.JFrame {
                     .addComponent(pwdContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCambiarPass)
-                .addGap(26, 26, 26)
+                .addGap(32, 32, 32)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnIniciarAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -262,7 +306,7 @@ public class FraInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEmailActionPerformed
 
     private void lblCambiarPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCambiarPassMouseClicked
-        DlgCambiarContrasenia cambiarContrasenia = new DlgCambiarContrasenia(this,true, txtGmail.getText());
+        DlgCambiarContrasenia cambiarContrasenia = new DlgCambiarContrasenia(this, true, txtGmail.getText());
         cambiarContrasenia.setLocationRelativeTo(this);
         cambiarContrasenia.setVisible(true);
     }//GEN-LAST:event_lblCambiarPassMouseClicked
@@ -277,24 +321,47 @@ public class FraInicio extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         try {
-            if (!txtGmail.getText().equals("")&&(pwdContrasenia.getPassword().length>0)) {
+            if (!txtGmail.getText().equals("") && (pwdContrasenia.getPassword().length > 0)) {
                 String correo = txtGmail.getText();
                 char[] password = pwdContrasenia.getPassword();
                 String passwordString = new String(password);
                 Empleados emple = empleDAO.iniciarSesion(correo, passwordString);
-                if (emple!=null) {
+                if (emple != null) {
                     dispose();
-                    abrirSistema(emple);   
-                }else{
+                    //False para empleados
+                    abrirSistema(emple, false);
+                } else {
                     JOptionPane.showMessageDialog(null, "Correo y/o contraseña incorrectos.");
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Verifique los campos.");
             }
         } catch (Exception e) {
-            System.out.println("Error "+e);
+            System.out.println("Error " + e);
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void btnIniciarAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarAdminActionPerformed
+        try {
+            if (!txtGmail.getText().equals("") && (pwdContrasenia.getPassword().length > 0)) {
+                String usuario = txtGmail.getText();
+                char[] password = pwdContrasenia.getPassword();
+                String passwordString = new String(password);
+                Administrador admin = adminDAO.iniciarSecionAdmin(usuario, passwordString);
+                if (admin != null) {
+                    dispose();
+                    //True para administradores
+                    abrirSistema(admin, true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Correo y/o contraseña incorrectos.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Verifique los campos.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+    }//GEN-LAST:event_btnIniciarAdminActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -324,6 +391,7 @@ public class FraInicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEmail;
     private javax.swing.JButton btnGitHub;
+    private javax.swing.JButton btnIniciarAdmin;
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -3,15 +3,18 @@ package Vista;
 import dao.EmpleadosJpaController;
 import dto.Empleados;
 import Vista.DlgCambiarContrasenia;
+import dao.AdministradorJpaController;
+import dto.Administrador;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.plaf.RootPaneUI;
 
 public class JpnPerfil extends javax.swing.JPanel {
 
     EmpleadosJpaController empleDAO = new EmpleadosJpaController();
+    AdministradorJpaController adminDAO =  new AdministradorJpaController();
     Empleados emple;
+    Administrador admin;
     
     public JpnPerfil(int id) {
         initComponents();

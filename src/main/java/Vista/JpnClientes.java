@@ -34,6 +34,7 @@ public class JpnClientes extends javax.swing.JPanel {
 
         for (Clientes clientes : lista) {
             Object[] rowData = {
+                clientes.getIdCliente(),
                 clientes.getDni(),
                 clientes.getNombres(),
                 clientes.getApellidos(),
@@ -76,11 +77,9 @@ public class JpnClientes extends javax.swing.JPanel {
         jpnClientesBD = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTablaDeClientes = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
 
         lblDni.setText("N° DNI :");
 
@@ -183,33 +182,40 @@ public class JpnClientes extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Clientes en el sistema");
 
-        jLabel2.setText("N° DNI : ");
+        jLabel2.setText("BUSCAR POR N° DNI : ");
 
-        jButton1.setBackground(new java.awt.Color(102, 255, 51));
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Buscar");
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyReleased(evt);
+            }
+        });
 
         tblTablaDeClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "DNI", "NOMBRES", "APELLIDOS", "CORREO", "N° CEL"
+                "N°", "DNI", "NOMBRES", "APELLIDOS", "CORREO", "N° CEL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblTablaDeClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTablaDeClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTablaDeClientes);
-
-        jButton2.setBackground(new java.awt.Color(204, 0, 0));
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("PDF");
+        if (tblTablaDeClientes.getColumnModel().getColumnCount() > 0) {
+            tblTablaDeClientes.getColumnModel().getColumn(0).setMinWidth(15);
+            tblTablaDeClientes.getColumnModel().getColumn(0).setMaxWidth(30);
+        }
 
         javax.swing.GroupLayout jpnClientesBDLayout = new javax.swing.GroupLayout(jpnClientesBD);
         jpnClientesBD.setLayout(jpnClientesBDLayout);
@@ -222,16 +228,12 @@ public class JpnClientes extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1)
                         .addGap(179, 179, 179))
-                    .addGroup(jpnClientesBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jpnClientesBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jpnClientesBDLayout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2))))
+                            .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(30, 30, 30))
         );
         jpnClientesBDLayout.setVerticalGroup(
@@ -242,11 +244,9 @@ public class JpnClientes extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnClientesBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
 
@@ -336,17 +336,50 @@ public class JpnClientes extends javax.swing.JPanel {
         cargarClientes();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
+        String dni = txtBusqueda.getText().trim();
+        List<Clientes> lista = cliDAO.buscarClientes(dni);
+        tableModel.setRowCount(0);
+        for (Clientes clientes : lista) {
+            Object[] row = {
+                clientes.getIdCliente(),
+                clientes.getDni(),
+                clientes.getNombres(),
+                clientes.getApellidos(),
+                clientes.getCorreo(),
+                clientes.getCelular()
+            };
+            tableModel.addRow(row);
+        }
+    }//GEN-LAST:event_txtBusquedaKeyReleased
+
+    private void tblTablaDeClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablaDeClientesMouseClicked
+        DefaultTableModel model = (DefaultTableModel) tblTablaDeClientes.getModel();
+        int row = tblTablaDeClientes.getSelectedRow();
+        if (row >= 0) {
+            int idCliente = Integer.parseInt(model.getValueAt(row, 0).toString());
+            String dniCliente = model.getValueAt(row, 1).toString();
+            String nombCliente = model.getValueAt(row, 2).toString();
+            String apellCliente = model.getValueAt(row, 3).toString();
+            String correo = model.getValueAt(row, 4).toString();
+            String celular = model.getValueAt(row, 5).toString();
+            
+            Clientes temp = new Clientes(idCliente, dniCliente, nombCliente, apellCliente, correo, celular);
+            
+            DlgOperacionesClientes operacionesClientes = new DlgOperacionesClientes((JFrame) SwingUtilities.getWindowAncestor(this),true, temp);
+            operacionesClientes.setLocationRelativeTo(this);
+            operacionesClientes.setVisible(true);
+        }
+        cargarClientes();
+    }//GEN-LAST:event_tblTablaDeClientesMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel jpnClientesBD;
     private javax.swing.JPanel jpnResultados;
     private javax.swing.JLabel lblDni;
@@ -356,6 +389,7 @@ public class JpnClientes extends javax.swing.JPanel {
     private javax.swing.JLabel lblRnombres;
     private javax.swing.JLabel lblRnombresc;
     private javax.swing.JTable tblTablaDeClientes;
+    private javax.swing.JTextField txtBusqueda;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtRapma;
     private javax.swing.JTextField txtRappa;

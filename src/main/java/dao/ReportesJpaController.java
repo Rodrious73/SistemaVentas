@@ -140,5 +140,16 @@ public class ReportesJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public List<Reportes> findReportesByAdministrador(int idAdmin) {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNamedQuery("Reportes.findByIdAdmin");
+            query.setParameter("idAdmin", idAdmin);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
 }

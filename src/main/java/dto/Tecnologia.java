@@ -25,6 +25,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Tecnologia.findAll", query = "SELECT t FROM Tecnologia t"),
     @NamedQuery(name = "Tecnologia.findByIdproducto", query = "SELECT t FROM Tecnologia t WHERE t.idproducto = :idproducto"),
     @NamedQuery(name = "Tecnologia.findByNombreproducto", query = "SELECT t FROM Tecnologia t WHERE t.nombreproducto = :nombreproducto"),
+    @NamedQuery(name = "Tecnologia.buscarPorNombre", query = "SELECT t FROM Tecnologia t WHERE t.nombreproducto LIKE :nombreproducto"),
     @NamedQuery(name = "Tecnologia.findByIdProveedor", query = "SELECT t FROM Tecnologia t WHERE t.idProveedor = :idProveedor"),
     @NamedQuery(name = "Tecnologia.findByCantidad", query = "SELECT t FROM Tecnologia t WHERE t.cantidad = :cantidad"),
     @NamedQuery(name = "Tecnologia.findByPrecio", query = "SELECT t FROM Tecnologia t WHERE t.precio = :precio"),

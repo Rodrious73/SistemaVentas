@@ -20,6 +20,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Administrador.findByApellido", query = "SELECT a FROM Administrador a WHERE a.apellido = :apellido"),
     @NamedQuery(name = "Administrador.findByCorreo", query = "SELECT a FROM Administrador a WHERE a.correo = :correo"),
     @NamedQuery(name = "Administrador.findByUsuario", query = "SELECT a FROM Administrador a WHERE a.usuario = :usuario"),
+    @NamedQuery(name = "Administrador.findByCategoria", query = "SELECT a FROM Administrador a WHERE a.categoria = :categoria"),
+    @NamedQuery(name = "Administrador.validar", query = "SELECT a FROM Administrador a WHERE a.usuario = :usuario AND a.pass = :pass"),
     @NamedQuery(name = "Administrador.findByPass", query = "SELECT a FROM Administrador a WHERE a.pass = :pass")})
 public class Administrador implements Serializable {
 
@@ -44,6 +46,9 @@ public class Administrador implements Serializable {
     @Basic(optional = false)
     @Column(name = "pass")
     private String pass;
+    @Basic(optional = false)
+    @Column(name = "categoria")
+    private String categoria;
 
     public Administrador() {
     }
@@ -109,6 +114,14 @@ public class Administrador implements Serializable {
         this.pass = pass;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -133,5 +146,5 @@ public class Administrador implements Serializable {
     public String toString() {
         return "dto.Administrador[ id=" + id + " ]";
     }
-    
+
 }
