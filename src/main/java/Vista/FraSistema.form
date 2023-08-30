@@ -75,6 +75,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Empleados"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmnEmpleadosMouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jmnReportes">
           <Properties>

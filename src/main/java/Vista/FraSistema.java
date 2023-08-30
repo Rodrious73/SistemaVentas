@@ -126,6 +126,11 @@ public class FraSistema extends javax.swing.JFrame {
         mnbMenus.add(jmnProveedores);
 
         jmnEmpleados.setText("Empleados");
+        jmnEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmnEmpleadosMouseClicked(evt);
+            }
+        });
         mnbMenus.add(jmnEmpleados);
 
         jmnReportes.setText("Reportes");
@@ -237,6 +242,10 @@ public class FraSistema extends javax.swing.JFrame {
         JpnProveedores proveedores = new JpnProveedores();
         mostrarPaneles(proveedores);
     }//GEN-LAST:event_jmnProveedoresMouseClicked
+
+    private void jmnEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnEmpleadosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmnEmpleadosMouseClicked
 
     public static void main(String args[]) {
         try {
