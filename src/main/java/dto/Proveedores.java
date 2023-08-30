@@ -26,6 +26,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Proveedores.findByIdProve", query = "SELECT p FROM Proveedores p WHERE p.idProve = :idProve"),
     @NamedQuery(name = "Proveedores.findByEmpreProve", query = "SELECT p FROM Proveedores p WHERE p.empreProve = :empreProve"),
     @NamedQuery(name = "Proveedores.findByRucProve", query = "SELECT p FROM Proveedores p WHERE p.rucProve = :rucProve"),
+    @NamedQuery(name = "Proveedores.busquedaRuc", query = "SELECT p FROM Proveedores p WHERE p.rucProve LIKE :rucProve"),
     @NamedQuery(name = "Proveedores.findByDireccionProve", query = "SELECT p FROM Proveedores p WHERE p.direccionProve = :direccionProve"),
     @NamedQuery(name = "Proveedores.findByTelefonoProve", query = "SELECT p FROM Proveedores p WHERE p.telefonoProve = :telefonoProve"),
     @NamedQuery(name = "Proveedores.findByCelProve", query = "SELECT p FROM Proveedores p WHERE p.celProve = :celProve")})
@@ -62,6 +63,14 @@ public class Proveedores implements Serializable {
 
     public Proveedores(Integer idProve, String empreProve, String rucProve, String direccionProve, String telefonoProve, String celProve) {
         this.idProve = idProve;
+        this.empreProve = empreProve;
+        this.rucProve = rucProve;
+        this.direccionProve = direccionProve;
+        this.telefonoProve = telefonoProve;
+        this.celProve = celProve;
+    }
+
+    public Proveedores(String empreProve, String rucProve, String direccionProve, String telefonoProve, String celProve) {
         this.empreProve = empreProve;
         this.rucProve = rucProve;
         this.direccionProve = direccionProve;

@@ -45,9 +45,11 @@ public class FraInicio extends javax.swing.JFrame {
         True para administradores
         False para empleados
      */
-    private void abrirSistema(Object obj, boolean condicion) {
+    private void abrirSistema(Object obj, boolean condicion, String titulo) {
         FraSistema fraSistema = new FraSistema(obj, condicion);
         fraSistema.setVisible(true);
+        String title = fraSistema.getTitle();
+        fraSistema.setTitle(title+titulo);
     }
 
     private void cargarSugerenciasCorreos() {
@@ -329,7 +331,7 @@ public class FraInicio extends javax.swing.JFrame {
                 if (emple != null) {
                     dispose();
                     //False para empleados
-                    abrirSistema(emple, false);
+                    abrirSistema(emple, false, "Empleados");
                 } else {
                     JOptionPane.showMessageDialog(null, "Correo y/o contraseña incorrectos.");
                 }
@@ -351,7 +353,7 @@ public class FraInicio extends javax.swing.JFrame {
                 if (admin != null) {
                     dispose();
                     //True para administradores
-                    abrirSistema(admin, true);
+                    abrirSistema(admin, true,"Administradores");
                 } else {
                     JOptionPane.showMessageDialog(null, "Correo y/o contraseña incorrectos.");
                 }

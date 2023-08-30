@@ -57,7 +57,6 @@
             <artifactId>gson</artifactId>
             <version>2.10.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.swinglabs.swingx/swingx-all -->
         <dependency>
             <groupId>org.swinglabs.swingx</groupId>
             <artifactId>swingx-all</artifactId>

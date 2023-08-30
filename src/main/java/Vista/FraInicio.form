@@ -144,7 +144,7 @@
                 <Property name="text" type="java.lang.String" value="GitHub"/>
                 <Property name="toolTipText" type="java.lang.String" value="Ir a GitHub @Rodrious73"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -168,7 +168,7 @@
                 <Property name="text" type="java.lang.String" value="Email"/>
                 <Property name="toolTipText" type="java.lang.String" value="Enviar un email (rodriousbig73@gmail.com)"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -287,7 +287,7 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cambiar contrase&#xf1;a?"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -313,7 +313,7 @@
                 <Property name="text" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
                 <Property name="toolTipText" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -337,7 +337,7 @@
                 <Property name="text" type="java.lang.String" value="Administrador"/>
                 <Property name="toolTipText" type="java.lang.String" value="Iniciar sesi&#xf3;n como Administrador"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>

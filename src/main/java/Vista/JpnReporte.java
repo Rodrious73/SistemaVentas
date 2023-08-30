@@ -1,6 +1,8 @@
 package Vista;
 
+import dao.AdministradorJpaController;
 import dao.ReportesJpaController;
+import dto.Administrador;
 import dto.Reportes;
 import java.util.List;
 import javax.swing.JFrame;
@@ -11,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class JpnReporte extends javax.swing.JPanel {
 
     ReportesJpaController reportesDAO = new ReportesJpaController();
+    AdministradorJpaController adminDAO = new AdministradorJpaController();
 
     private DefaultTableModel tableModel;
 
@@ -181,6 +184,11 @@ public class JpnReporte extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblReportesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblReportes);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -241,7 +249,7 @@ public class JpnReporte extends javax.swing.JPanel {
             correos.setLocationRelativeTo(this);
             correos.setVisible(true);
             cargarReportes(Integer.parseInt(idEmpleado));
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Verifique los campos.");
         }
     }//GEN-LAST:event_btnEnviarGmailMouseClicked
@@ -255,7 +263,7 @@ public class JpnReporte extends javax.swing.JPanel {
             correos.setLocationRelativeTo(this);
             correos.setVisible(true);
             cargarReportes(Integer.parseInt(idEmpleado));
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Verifique los campos.");
         }
     }//GEN-LAST:event_btnEnviarActionPerformed
@@ -263,6 +271,25 @@ public class JpnReporte extends javax.swing.JPanel {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiar();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void tblReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblReportesMouseClicked
+        DefaultTableModel model = (DefaultTableModel) tblReportes.getModel();
+        int row = tblReportes.getSelectedRow();
+        if (row >= 0) {
+            int idReporte = Integer.parseInt(model.getValueAt(row, 0).toString());
+            Reportes temp = reportesDAO.findReportes(idReporte);
+            Administrador tempAdmin = adminDAO.findAdministrador(temp.getIdAdmin());
+            String informacion = "\t\tINFORMACIÓN DE REPORTE\n\n";
+            informacion += "ID REPORTE : \t" + temp.getIdRepo()+ "\n";
+            informacion += "DESTINATARIO : \t" + tempAdmin.getNombre()+ "\n";
+            informacion += "\tCORREO : \t" + tempAdmin.getCorreo()+ "\n";
+            informacion += "ASUNTO : \t" + temp.getAsunto() + "\n";
+            informacion += "DESCRIPCIÓN : " + temp.getDescripcion() + "\n";
+            informacion += "RESPUESTA : " + temp.getRespuesta() + "\n";
+
+            JOptionPane.showMessageDialog(null, informacion);
+        }
+    }//GEN-LAST:event_tblReportesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

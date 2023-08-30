@@ -1,17 +1,15 @@
 package Vista;
 
-import dao.EmpleadosJpaController;
-import dto.Empleados;
-import javax.swing.JFrame;
+import dao.AdministradorJpaController;
+import dto.Administrador;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
-public class JpnPerfil extends javax.swing.JPanel {
+public class JpnPerfilAdmin extends javax.swing.JPanel {
 
-    EmpleadosJpaController empleDAO = new EmpleadosJpaController();
-    Empleados emple;
+    AdministradorJpaController adminDAO =  new AdministradorJpaController();
+    Administrador admin;
     
-    public JpnPerfil(int id) {
+    public JpnPerfilAdmin(int id) {
         initComponents();
         traerDatos(id);
         txtID.setEditable(false);
@@ -24,43 +22,38 @@ public class JpnPerfil extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lblApPaterno = new javax.swing.JLabel();
-        txtApPaterno = new javax.swing.JTextField();
-        lblApMaterno = new javax.swing.JLabel();
-        txtApMaterno = new javax.swing.JTextField();
-        lblDNI = new javax.swing.JLabel();
+        lblApellidos = new javax.swing.JLabel();
+        txtApellidos = new javax.swing.JTextField();
+        lblUsuario = new javax.swing.JLabel();
         lblID = new javax.swing.JLabel();
-        txtDNI = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         lblCorreo = new javax.swing.JLabel();
-        lblCelular = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
-        txtCelular = new javax.swing.JTextField();
+        lblNombres = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
+        txtNombres = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         btnGuardarCambios = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnEditarCampos = new javax.swing.JButton();
-        btnCambiarContrasenia = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(255, 51, 51)));
 
-        lblApPaterno.setText("AP. PATERNO :");
+        lblApellidos.setText("APELLIDOS :");
 
-        lblApMaterno.setText("AP. MATERNO :");
-
-        lblDNI.setText("DNI :");
+        lblUsuario.setText("USUARIO :");
 
         lblID.setText("ID :");
 
+        txtUsuario.setEditable(false);
+
         lblCorreo.setText("CORREO :");
 
-        lblCelular.setText("CELULAR :");
+        lblNombres.setText("NOMBRES :");
 
-        lblNombre.setText("NOMBRE :");
+        txtID.setEditable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
@@ -90,7 +83,13 @@ public class JpnPerfil extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(79, 79, 79)
+                .addComponent(btnGuardarCambios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addContainerGap(100, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -103,32 +102,22 @@ public class JpnPerfil extends javax.swing.JPanel {
                             .addComponent(jLabel1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblApPaterno)
-                            .addComponent(lblNombre)
-                            .addComponent(lblApMaterno)
-                            .addComponent(lblDNI)
-                            .addComponent(lblCelular))
+                            .addComponent(lblApellidos)
+                            .addComponent(lblNombres)
+                            .addComponent(lblUsuario))
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombre)
-                            .addComponent(txtApPaterno)
-                            .addComponent(txtApMaterno)
-                            .addComponent(txtDNI)
-                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(btnGuardarCambios)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar)
-                        .addGap(31, 31, 31)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                            .addComponent(txtNombres, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(txtApellidos)
+                            .addComponent(txtUsuario))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblID)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -138,29 +127,21 @@ public class JpnPerfil extends javax.swing.JPanel {
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombres)
+                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblApPaterno)
-                    .addComponent(txtApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblApMaterno)
-                    .addComponent(txtApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDNI)
-                    .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCelular))
+                    .addComponent(lblApellidos)
+                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUsuario)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardarCambios)
                     .addComponent(btnCancelar))
-                .addGap(23, 23, 23))
+                .addGap(21, 21, 21))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(255, 255, 0)));
@@ -177,14 +158,6 @@ public class JpnPerfil extends javax.swing.JPanel {
             }
         });
 
-        btnCambiarContrasenia.setText("Cambiar contraseña");
-        btnCambiarContrasenia.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnCambiarContrasenia.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCambiarContraseniaMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -195,21 +168,17 @@ public class JpnPerfil extends javax.swing.JPanel {
                         .addGap(171, 171, 171)
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(btnEditarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnCambiarContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addGap(38, 38, 38)
+                        .addComponent(btnEditarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel2)
-                .addGap(48, 48, 48)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditarCampos)
-                    .addComponent(btnCambiarContrasenia))
+                .addGap(37, 37, 37)
+                .addComponent(btnEditarCampos)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -235,17 +204,10 @@ public class JpnPerfil extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCambiarContraseniaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarContraseniaMouseClicked
-        DlgCambiarContrasenia cambiarContrasenia = new DlgCambiarContrasenia((JFrame) SwingUtilities.getWindowAncestor(this),true, emple.getCorreoEmple());
-        cambiarContrasenia.setLocationRelativeTo(this);
-        cambiarContrasenia.setVisible(true);
-    }//GEN-LAST:event_btnCambiarContraseniaMouseClicked
-
     private void btnEditarCamposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarCamposMouseClicked
         desabilitarCampos(true);
         desabilitarBotones(true);
         btnEditarCampos.setEnabled(false);
-        btnCambiarContrasenia.setEnabled(false);
     }//GEN-LAST:event_btnEditarCamposMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
@@ -253,14 +215,11 @@ public class JpnPerfil extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnGuardarCambiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarCambiosMouseClicked
-        emple.setCorreoEmple(txtCorreo.getText());
-        emple.setNombreEmple(txtNombre.getText());
-        emple.setAppaEmple(txtApPaterno.getText());
-        emple.setApmaEmple(txtApMaterno.getText());
-        emple.setDniEmple(txtDNI.getText());
-        emple.setCeluEmple(txtCelular.getText());
+        admin.setCorreo(txtCorreo.getText());
+        admin.setNombre(txtNombres.getText());
+        admin.setApellido(txtApellidos.getText());
         try {
-            empleDAO.edit(emple);
+            adminDAO.edit(admin);
             cancelar();
             JOptionPane.showMessageDialog(null, "Se guardaron lo cambios correctamente.");
         } catch (Exception e) {
@@ -272,28 +231,22 @@ public class JpnPerfil extends javax.swing.JPanel {
         desabilitarCampos(false);
         desabilitarBotones(false);
         btnEditarCampos.setEnabled(true);
-        btnCambiarContrasenia.setEnabled(true);
-        traerDatos(emple.getId());
+        traerDatos(admin.getId());
     }
     
     private void traerDatos(int id){
-        emple = empleDAO.findEmpleados(id);
-        txtID.setText(emple.getId()+"");
-        txtCorreo.setText(emple.getCorreoEmple());
-        txtNombre.setText(emple.getNombreEmple());
-        txtApPaterno.setText(emple.getAppaEmple());
-        txtApMaterno.setText(emple.getApmaEmple());
-        txtDNI.setText(emple.getDniEmple());
-        txtCelular.setText(emple.getCeluEmple());
+        admin = adminDAO.findAdministrador(id);
+        txtID.setText(admin.getId()+"");
+        txtCorreo.setText(admin.getCorreo());
+        txtNombres.setText(admin.getNombre());
+        txtApellidos.setText(admin.getApellido());
+        txtUsuario.setText(admin.getUsuario());
     }
     
     private void desabilitarCampos(boolean condicion){
         txtCorreo.setEditable(condicion);
-        txtNombre.setEditable(condicion);
-        txtApPaterno.setEditable(condicion);
-        txtApMaterno.setEditable(condicion);
-        txtDNI.setEditable(condicion);
-        txtCelular.setEditable(condicion);
+        txtNombres.setEditable(condicion);
+        txtApellidos.setEditable(condicion);
     }
     
     private void desabilitarBotones(boolean condicion){
@@ -303,7 +256,6 @@ public class JpnPerfil extends javax.swing.JPanel {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCambiarContrasenia;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditarCampos;
     private javax.swing.JButton btnGuardarCambios;
@@ -311,19 +263,15 @@ public class JpnPerfil extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblApMaterno;
-    private javax.swing.JLabel lblApPaterno;
-    private javax.swing.JLabel lblCelular;
+    private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel lblDNI;
     private javax.swing.JLabel lblID;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JTextField txtApMaterno;
-    private javax.swing.JTextField txtApPaterno;
-    private javax.swing.JTextField txtCelular;
+    private javax.swing.JLabel lblNombres;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombres;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

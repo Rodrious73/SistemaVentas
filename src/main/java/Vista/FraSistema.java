@@ -5,33 +5,35 @@ import dto.Empleados;
 import javax.swing.JPanel;
 
 public class FraSistema extends javax.swing.JFrame {
-    
+
     Empleados emple;
     Administrador admin;
     private boolean condicion;
-    
+
     public FraSistema() {
         initComponents();
         this.setLocationRelativeTo(null);
         JpnInicio inicio = new JpnInicio();
         mostrarPaneles(inicio);
     }
-    
-    public FraSistema(Object obj, boolean condicion){
+
+    public FraSistema(Object obj, boolean condicion) {
         initComponents();
         this.setLocationRelativeTo(null);
         JpnInicio inicio = new JpnInicio();
         mostrarPaneles(inicio);
         this.condicion = condicion;
+        jmnProveedores.setVisible(this.condicion);
+        jmnEmpleados.setVisible(this.condicion);
         if (condicion) {
             admin = (Administrador) obj;
-        }else{
+        } else {
             emple = (Empleados) obj;
         }
     }
-    
-    private void mostrarPaneles(JPanel jpanel){
-        jpanel.setSize(900,428);
+
+    private void mostrarPaneles(JPanel jpanel) {
+        jpanel.setSize(900, 428);
         jpanel.setLocation(0, 0);
         jpnContendor.removeAll();
         jpnContendor.add(jpanel);
@@ -49,11 +51,14 @@ public class FraSistema extends javax.swing.JFrame {
         jmnVentas = new javax.swing.JMenu();
         jmnProductos = new javax.swing.JMenu();
         jmnClientes = new javax.swing.JMenu();
+        jmnProveedores = new javax.swing.JMenu();
+        jmnEmpleados = new javax.swing.JMenu();
         jmnReportes = new javax.swing.JMenu();
         jmnPerfil = new javax.swing.JMenu();
         mnuSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Ventas - ");
 
         javax.swing.GroupLayout jpnContendorLayout = new javax.swing.GroupLayout(jpnContendor);
         jpnContendor.setLayout(jpnContendorLayout);
@@ -90,6 +95,7 @@ public class FraSistema extends javax.swing.JFrame {
 
         jmnProductos.setText("Productos");
         jmnProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jmnProductos.setMargin(new java.awt.Insets(3, 11, 5, 11));
         jmnProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnProductosMouseClicked(evt);
@@ -105,6 +111,22 @@ public class FraSistema extends javax.swing.JFrame {
             }
         });
         mnbMenus.add(jmnClientes);
+
+        jmnProveedores.setText("Proveedores");
+        jmnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmnProveedoresMouseClicked(evt);
+            }
+        });
+        jmnProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnProveedoresActionPerformed(evt);
+            }
+        });
+        mnbMenus.add(jmnProveedores);
+
+        jmnEmpleados.setText("Empleados");
+        mnbMenus.add(jmnEmpleados);
 
         jmnReportes.setText("Reportes");
         jmnReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -163,27 +185,31 @@ public class FraSistema extends javax.swing.JFrame {
         int id;
         if (condicion) {
             id = admin.getId();
-        }else{
+            JpnPerfilAdmin perfilAdmin = new JpnPerfilAdmin(id);
+            mostrarPaneles(perfilAdmin);
+        } else {
             id = emple.getId();
+            JpnPerfil perfil = new JpnPerfil(id);
+            mostrarPaneles(perfil);
         }
-        JpnPerfil perfil = new JpnPerfil(id);
-        mostrarPaneles(perfil);
     }//GEN-LAST:event_jmnPerfilMouseClicked
 
     private void jmnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnReportesMouseClicked
         int id;
         if (condicion) {
             id = admin.getId();
-        }else{
+            JpnReporteAdmin reporteAdmin = new JpnReporteAdmin(id);
+            mostrarPaneles(reporteAdmin);
+        } else {
             id = emple.getId();
+            JpnReporte reporte = new JpnReporte(id);
+            mostrarPaneles(reporte);
         }
-        JpnReporte reporte = new JpnReporte(id);
-        mostrarPaneles(reporte);
     }//GEN-LAST:event_jmnReportesMouseClicked
 
     private void mnuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSalirMouseClicked
         dispose();
-        FraInicio inicio =  new FraInicio();
+        FraInicio inicio = new FraInicio();
         inicio.setVisible(true);
     }//GEN-LAST:event_mnuSalirMouseClicked
 
@@ -195,13 +221,22 @@ public class FraSistema extends javax.swing.JFrame {
     private void jmnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnProductosMouseClicked
         int admin;
         if (condicion) {
-            admin=1;
-        }else{
-            admin=0;
+            admin = 1;
+        } else {
+            admin = 0;
         }
-        JpnProductos productos = new JpnProductos(true,admin);
+        JpnProductos productos = new JpnProductos(true, admin);
         mostrarPaneles(productos);
     }//GEN-LAST:event_jmnProductosMouseClicked
+
+    private void jmnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnProveedoresActionPerformed
+        
+    }//GEN-LAST:event_jmnProveedoresActionPerformed
+
+    private void jmnProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnProveedoresMouseClicked
+        JpnProveedores proveedores = new JpnProveedores();
+        mostrarPaneles(proveedores);
+    }//GEN-LAST:event_jmnProveedoresMouseClicked
 
     public static void main(String args[]) {
         try {
@@ -232,9 +267,11 @@ public class FraSistema extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jmnClientes;
+    private javax.swing.JMenu jmnEmpleados;
     private javax.swing.JMenu jmnInicio;
     private javax.swing.JMenu jmnPerfil;
     private javax.swing.JMenu jmnProductos;
+    private javax.swing.JMenu jmnProveedores;
     private javax.swing.JMenu jmnReportes;
     private javax.swing.JMenu jmnVentas;
     private javax.swing.JPanel jpnContendor;

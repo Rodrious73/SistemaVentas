@@ -138,4 +138,19 @@ public class ProveedoresJpaController implements Serializable {
         }
     }
     
+    public List<Proveedores> buscarProveedores(String ruc){
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Proveedores.busquedaRuc");
+            String nruc = ruc+"%";
+            q.setParameter("rucProve", nruc);
+            List<Proveedores> lista = q.getResultList();
+            return lista;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
 }
