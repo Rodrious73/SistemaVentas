@@ -8,18 +8,25 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
 
     ClientesJpaController cliDAO = new ClientesJpaController();
     private static Clientes cliente;
+    private static boolean condicion;
     private int n = 0;
 
-    public DlgOperacionesClientes(java.awt.Frame parent, boolean modal, Clientes cliente) {
+    public DlgOperacionesClientes(java.awt.Frame parent, boolean modal, Clientes cliente, boolean condicion) {
         super(parent, modal);
         initComponents();
         btnCancelar.setVisible(false);
         this.cliente = cliente;
+        this.condicion = condicion;
+        btnEliminar.setVisible(condicion);
         cargarDatosCliente();
     }
 
     public static Clientes getCliente() {
         return cliente;
+    }
+
+    public static boolean isCondicion() {
+        return condicion;
     }
 
     private void cargarDatosCliente() {
@@ -51,6 +58,7 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
         btnEditar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cliente");
@@ -110,6 +118,15 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
             }
         });
 
+        btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
+        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
+        btnEliminar.setText("X");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,7 +138,7 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
                         .addComponent(lblTitulo))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblNombres)
@@ -138,13 +155,15 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
                                     .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtId)
                                     .addComponent(txtDni)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(btnEditar)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCerrar)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnCerrar)))))
+                                .addComponent(btnEliminar)))))
                 .addContainerGap(120, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -180,7 +199,8 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(btnCancelar)
-                    .addComponent(btnCerrar))
+                    .addComponent(btnCerrar)
+                    .addComponent(btnEliminar))
                 .addGap(33, 33, 33))
         );
 
@@ -189,7 +209,8 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (n == 0) {
-            txtCorreo.requestFocus();
+            txtCorreo.selectAll();
+            txtCorreo.requestFocusInWindow();
             habilitarEditar(true);
             n = 1;
         } else {
@@ -216,6 +237,19 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            int respuesta = JOptionPane.showConfirmDialog(null, "Quieres eliminar al cliente " + txtDni.getText() + " ?", "Eliminar", JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                int idCliente = Integer.parseInt(txtId.getText());
+                cliDAO.destroy(idCliente);
+                JOptionPane.showMessageDialog(null, "Se elimino correctamente.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error "+ e);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -246,7 +280,8 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Clientes cliente = getCliente();
-                DlgOperacionesClientes dialog = new DlgOperacionesClientes(new javax.swing.JFrame(), true, cliente);
+                boolean condicion = isCondicion();
+                DlgOperacionesClientes dialog = new DlgOperacionesClientes(new javax.swing.JFrame(), true, cliente, condicion);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -262,6 +297,7 @@ public class DlgOperacionesClientes extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblCelular;
     private javax.swing.JLabel lblCorreo;

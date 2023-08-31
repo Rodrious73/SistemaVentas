@@ -46,7 +46,7 @@ public class FraInicio extends javax.swing.JFrame {
         False para empleados
      */
     private void abrirSistema(Object obj, boolean condicion, String titulo) {
-        FraSistema fraSistema = new FraSistema(obj, condicion);
+        FraSistema fraSistema = new FraSistema(obj, condicion, titulo);
         fraSistema.setVisible(true);
         String title = fraSistema.getTitle();
         fraSistema.setTitle(title+titulo);

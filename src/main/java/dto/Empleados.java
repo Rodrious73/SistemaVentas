@@ -24,6 +24,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Empleados.findByAppaEmple", query = "SELECT e FROM Empleados e WHERE e.appaEmple = :appaEmple"),
     @NamedQuery(name = "Empleados.findByApmaEmple", query = "SELECT e FROM Empleados e WHERE e.apmaEmple = :apmaEmple"),
     @NamedQuery(name = "Empleados.findByDniEmple", query = "SELECT e FROM Empleados e WHERE e.dniEmple = :dniEmple"),
+    @NamedQuery(name = "Empleados.busquedaDNI", query = "SELECT e FROM Empleados e WHERE e.dniEmple LIKE :dniEmple"),
     @NamedQuery(name = "Empleados.findByCeluEmple", query = "SELECT e FROM Empleados e WHERE e.celuEmple = :celuEmple")})
 public class Empleados implements Serializable {
 
@@ -64,6 +65,16 @@ public class Empleados implements Serializable {
 
     public Empleados(Integer id, String correoEmple, String passEmple, String nombreEmple, String appaEmple, String apmaEmple, String dniEmple, String celuEmple) {
         this.id = id;
+        this.correoEmple = correoEmple;
+        this.passEmple = passEmple;
+        this.nombreEmple = nombreEmple;
+        this.appaEmple = appaEmple;
+        this.apmaEmple = apmaEmple;
+        this.dniEmple = dniEmple;
+        this.celuEmple = celuEmple;
+    }
+
+    public Empleados(String correoEmple, String passEmple, String nombreEmple, String appaEmple, String apmaEmple, String dniEmple, String celuEmple) {
         this.correoEmple = correoEmple;
         this.passEmple = passEmple;
         this.nombreEmple = nombreEmple;

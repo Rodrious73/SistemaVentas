@@ -1,14 +1,9 @@
 package Vista;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import dao.ClientesJpaController;
+import dao.ResultadoDniDAO;
 import dto.Clientes;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import dto.ResultadoDni;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -18,15 +13,17 @@ import javax.swing.table.DefaultTableModel;
 public class JpnClientes extends javax.swing.JPanel {
 
     private DefaultTableModel tableModel;
+    private boolean condicion;
     ClientesJpaController cliDAO = new ClientesJpaController();
-    
-    public JpnClientes() {
+
+    public JpnClientes(boolean condicion) {
         initComponents();
+        this.condicion = condicion;
         tableModel = (DefaultTableModel) tblTablaDeClientes.getModel();
         inicio();
         cargarClientes();
     }
-    
+
     private void cargarClientes() {
         tableModel.setRowCount(0);
 
@@ -283,39 +280,18 @@ public class JpnClientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String dni = txtDNI.getText();
-        String apitoken = "5de6591d68ff26fa772da0188ee0acaf5a8763411fb5b8f50d799b3bd5f0a8c4";
-        String url = "https://apiperu.dev/api/dni/" + dni + "?api_token=" + apitoken;
-        try {
-            URL enlace = new URL(url);
-            URLConnection request = enlace.openConnection();
-            request.connect();
-
-            JsonParser jp = new JsonParser();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonObject rootObject = root.getAsJsonObject();
-            if (rootObject.get("success").getAsBoolean()) {
-                jpnResultados.setVisible(true);
-                JsonObject dataObject = rootObject.getAsJsonObject("data");
-
-                String nombreCompleto = dataObject.get("nombre_completo").getAsString();
-                String numero = dataObject.get("numero").getAsString();
-                String nombres = dataObject.get("nombres").getAsString();
-                String apellidoPaterno = dataObject.get("apellido_paterno").getAsString();
-                String apellidoMaterno = dataObject.get("apellido_materno").getAsString();
-
-                txtRdni.setText(numero);
-                txtRnombresc.setText(nombreCompleto);
-                txtRnombres.setText(nombres);
-                txtRappa.setText(apellidoPaterno);
-                txtRapma.setText(apellidoMaterno);
-                txtDNI.setText("");
-            } else {
-                jpnResultados.setVisible(false);
-                JOptionPane.showMessageDialog(null, "El DNI no fue encontrado.");
-            }
-        } catch (Exception e) {
-            System.out.println("Error " + e);
+        ResultadoDniDAO resultadoDAO = new ResultadoDniDAO();
+        ResultadoDni resultado = resultadoDAO.obtenerDatosPorDni(txtDNI.getText());
+        if (resultado != null) {
+            txtRdni.setText(resultado.getDni());
+            txtRnombresc.setText(resultado.getNombre_completo());
+            txtRnombres.setText(resultado.getNombres());
+            txtRappa.setText(resultado.getApellido_paterno());
+            txtRapma.setText(resultado.getApellido_materno());
+            txtDNI.setText("");
+        } else {
+            jpnResultados.setVisible(false);
+            JOptionPane.showMessageDialog(null, "El DNI no fue encontrado.");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -363,10 +339,10 @@ public class JpnClientes extends javax.swing.JPanel {
             String apellCliente = model.getValueAt(row, 3).toString();
             String correo = model.getValueAt(row, 4).toString();
             String celular = model.getValueAt(row, 5).toString();
-            
+
             Clientes temp = new Clientes(idCliente, dniCliente, nombCliente, apellCliente, correo, celular);
-            
-            DlgOperacionesClientes operacionesClientes = new DlgOperacionesClientes((JFrame) SwingUtilities.getWindowAncestor(this),true, temp);
+
+            DlgOperacionesClientes operacionesClientes = new DlgOperacionesClientes((JFrame) SwingUtilities.getWindowAncestor(this), true, temp, condicion);
             operacionesClientes.setLocationRelativeTo(this);
             operacionesClientes.setVisible(true);
         }

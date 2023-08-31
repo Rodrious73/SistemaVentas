@@ -161,6 +161,20 @@ public class EmpleadosJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Empleados findEmpleadoByDniEmple(String dni) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Empleados.findByDniEmple");
+            q.setParameter("dniEmple", dni);
+            Empleados empleado = (Empleados) q.getSingleResult();
+            return empleado;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 
     public int cambiarContrasenia(String correo, String nuevaContrasenia) {
         EntityManager em = getEntityManager();
@@ -184,6 +198,21 @@ public class EmpleadosJpaController implements Serializable {
             em.close();
         }
 
+    }
+    
+    public List<Empleados> buscarEmpleados(String dni){
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Empleados.busquedaDNI");
+            String ndni = dni+"%";
+            q.setParameter("dniEmple", ndni);
+            List<Empleados> lista = q.getResultList();
+            return lista;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            em.close();
+        }
     }
 
 }

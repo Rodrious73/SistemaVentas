@@ -17,7 +17,7 @@ public class FraSistema extends javax.swing.JFrame {
         mostrarPaneles(inicio);
     }
 
-    public FraSistema(Object obj, boolean condicion) {
+    public FraSistema(Object obj, boolean condicion, String titulo) {
         initComponents();
         this.setLocationRelativeTo(null);
         JpnInicio inicio = new JpnInicio();
@@ -77,6 +77,7 @@ public class FraSistema extends javax.swing.JFrame {
 
         jmnInicio.setText("Inicio");
         jmnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jmnInicio.setMargin(new java.awt.Insets(3, 11, 5, 11));
         jmnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnInicioMouseClicked(evt);
@@ -86,6 +87,7 @@ public class FraSistema extends javax.swing.JFrame {
 
         jmnVentas.setText("Ventas");
         jmnVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jmnVentas.setMargin(new java.awt.Insets(3, 11, 5, 11));
         jmnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnVentasMouseClicked(evt);
@@ -105,6 +107,7 @@ public class FraSistema extends javax.swing.JFrame {
 
         jmnClientes.setText("Clientes");
         jmnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jmnClientes.setMargin(new java.awt.Insets(3, 11, 5, 11));
         jmnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnClientesMouseClicked(evt);
@@ -113,19 +116,16 @@ public class FraSistema extends javax.swing.JFrame {
         mnbMenus.add(jmnClientes);
 
         jmnProveedores.setText("Proveedores");
+        jmnProveedores.setMargin(new java.awt.Insets(3, 11, 5, 11));
         jmnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnProveedoresMouseClicked(evt);
             }
         });
-        jmnProveedores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnProveedoresActionPerformed(evt);
-            }
-        });
         mnbMenus.add(jmnProveedores);
 
         jmnEmpleados.setText("Empleados");
+        jmnEmpleados.setMargin(new java.awt.Insets(3, 11, 5, 11));
         jmnEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnEmpleadosMouseClicked(evt);
@@ -135,6 +135,7 @@ public class FraSistema extends javax.swing.JFrame {
 
         jmnReportes.setText("Reportes");
         jmnReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jmnReportes.setMargin(new java.awt.Insets(3, 11, 5, 11));
         jmnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnReportesMouseClicked(evt);
@@ -144,6 +145,7 @@ public class FraSistema extends javax.swing.JFrame {
 
         jmnPerfil.setText("Perfil");
         jmnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jmnPerfil.setMargin(new java.awt.Insets(3, 11, 5, 11));
         jmnPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmnPerfilMouseClicked(evt);
@@ -153,6 +155,7 @@ public class FraSistema extends javax.swing.JFrame {
 
         mnuSalir.setText("Salir");
         mnuSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        mnuSalir.setMargin(new java.awt.Insets(3, 11, 5, 11));
         mnuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mnuSalirMouseClicked(evt);
@@ -219,7 +222,7 @@ public class FraSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuSalirMouseClicked
 
     private void jmnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnClientesMouseClicked
-        JpnClientes clientes = new JpnClientes();
+        JpnClientes clientes = new JpnClientes(condicion);
         mostrarPaneles(clientes);
     }//GEN-LAST:event_jmnClientesMouseClicked
 
@@ -234,17 +237,14 @@ public class FraSistema extends javax.swing.JFrame {
         mostrarPaneles(productos);
     }//GEN-LAST:event_jmnProductosMouseClicked
 
-    private void jmnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnProveedoresActionPerformed
-        
-    }//GEN-LAST:event_jmnProveedoresActionPerformed
-
     private void jmnProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnProveedoresMouseClicked
         JpnProveedores proveedores = new JpnProveedores();
         mostrarPaneles(proveedores);
     }//GEN-LAST:event_jmnProveedoresMouseClicked
 
     private void jmnEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnEmpleadosMouseClicked
-        // TODO add your handling code here:
+        JpnEmpleados empleados = new JpnEmpleados();
+        mostrarPaneles(empleados);
     }//GEN-LAST:event_jmnEmpleadosMouseClicked
 
     public static void main(String args[]) {
