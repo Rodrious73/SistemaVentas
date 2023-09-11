@@ -8,6 +8,7 @@
     <class>dto.Reportes</class>
     <class>dto.Clientes</class>
     <class>dto.Proveedores</class>
+    <class>dto.Despedidos</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sistema_venta?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

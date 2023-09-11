@@ -15,12 +15,14 @@ import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
 public class JpnProductos extends javax.swing.JPanel {
 
+    private Tecnologia producto;
     private boolean condicion;
     ProveedoresJpaController proveeDAO = new ProveedoresJpaController();
     TecnologiaJpaController tecnoDAO = new TecnologiaJpaController();
     List<Proveedores> listaProvee;
     private int idProveedor = 1;
     private int idProducto;
+    private int condAdmin;
     private DefaultTableModel tableModel;
 
     public JpnProductos(boolean condicion, int admin) {
@@ -31,12 +33,10 @@ public class JpnProductos extends javax.swing.JPanel {
         cargarSugerenciasCategorias();
         listaProveedores();
         cargarProductos();
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
         idProducto = 0;
-        if (admin == 1) {
-            btnEliminar.setVisible(true);
-        } else {
-            btnEliminar.setVisible(false);
-        }
+        this.condAdmin = admin;
     }
 
     private void cargarSugerenciasCategorias() {
@@ -202,16 +202,16 @@ public class JpnProductos extends javax.swing.JPanel {
                                     .addComponent(lblCantidad)
                                     .addComponent(lblPrecio)
                                     .addComponent(lblMarca)
-                                    .addComponent(lblCategoria))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAgregar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnLimpiar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEliminar)))))
+                                    .addComponent(lblCategoria)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnAgregar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnEditar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnEliminar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnLimpiar)))
+                                .addGap(0, 33, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -298,7 +298,7 @@ public class JpnProductos extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -313,7 +313,7 @@ public class JpnProductos extends javax.swing.JPanel {
                     .addComponent(lblBuscar)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -369,6 +369,9 @@ public class JpnProductos extends javax.swing.JPanel {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limparCammpos();
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnAgregar.setVisible(true);
         idProducto = 0;
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -403,21 +406,24 @@ public class JpnProductos extends javax.swing.JPanel {
         int row = tblProductos.getSelectedRow();
         if (row >= 0) {
             idProducto = Integer.parseInt(model.getValueAt(row, 0).toString());
-            Tecnologia temp = tecnoDAO.findTecnologia(idProducto);
-
-            txtNombpro.setText(temp.getNombreproducto());
-            txtCantidad.setText(temp.getCantidad() + "");
-            txtPrecio.setText(temp.getPrecio() + "");
-            txtMarca.setText(temp.getMarca());
-            txtCategoria.setText(temp.getCategoria());
+            producto = tecnoDAO.findTecnologia(idProducto);
+        }
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Quieres editar o eliminar el producto " + producto.getNombreproducto()+ " ?", "Confirmar Edición", JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            txtNombpro.setText(producto.getNombreproducto());
+            txtCantidad.setText(producto.getCantidad() + "");
+            txtPrecio.setText(producto.getPrecio() + "");
+            txtMarca.setText(producto.getMarca());
+            txtCategoria.setText(producto.getCategoria());
 
             for (int i = 0; i < listaProvee.size(); i++) {
                 Proveedores proveedorObj = listaProvee.get(i);
-                if (proveedorObj.getIdProve() == temp.getIdProveedor()) {
+                if (proveedorObj.getIdProve() == producto.getIdProveedor()) {
                     cbmProveedores.setSelectedIndex(i);
                     break;
                 }
             }
+            activar();
         }
     }//GEN-LAST:event_tblProductosMouseClicked
 
@@ -453,7 +459,7 @@ public class JpnProductos extends javax.swing.JPanel {
                     System.out.println("Error " + e);
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Seleccione una fila en la tabla.");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -491,6 +497,14 @@ public class JpnProductos extends javax.swing.JPanel {
         txtPrecio.setText("");
         txtMarca.setText("");
         txtCategoria.setText("");
+    }
+    
+    private void activar(){
+        if (condAdmin==1) {
+            btnEliminar.setVisible(true);
+        }
+        btnEditar.setVisible(true);
+        btnAgregar.setVisible(false);
     }
 
 }
